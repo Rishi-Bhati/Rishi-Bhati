@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weighted Average Calculator</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        input[type="number"], button {
+            font-size: 2em;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+        .result {
+            font-size: 3em;
+            margin-top: 20px;
+        }
+        .reset-button {
+            display: none;
+            font-size: 2em;
+            padding: 10px 20px;
+            margin: 20px;
+            background-color: #03dac6;
+            color: #000000;
+            border: none;
+            cursor: pointer;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            border: 2px solid #6200ea;
+            border-radius: 5px;
+            background-color: #2e2e2e;
+            color: #ffffff;
+        }
+        button {
+            border-radius: 5px;
+        }
+        .result {
+            font-size: 4em;
+            color: #03dac6;
+        }
+        .reset-button:hover {
+            background-color: #018786;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weighted Average Calculator</h1>
+        <input type="number" id="judgesScore" placeholder="Judges' Score" min="0" max="100">
+        <input type="number" id="audiencesScore" placeholder="Audiences' Score" min="0" max="100">
+        <div id="loader" style="display: none; font-size: 3em; margin-top: 20px;">Loading...</div>
+        <button id="calc" onclick="calculateWeightedAverage()">Calculate</button>
+        <div class="result" id="result"></div>
+        <button class="reset-button" id="resetButton" onclick="resetForm()">Reset</button>
+    </div>
+    <script>
+        function calculateWeightedAverage() {
+            const judgesScore = parseFloat(document.getElementById('judgesScore').value);
+            const audiencesScore = parseFloat(document.getElementById('audiencesScore').value);
+            if (isNaN(judgesScore) || isNaN(audiencesScore)) {
+                alert('Please enter valid scores');
+                return;
+            }
+            document.getElementById('result').innerText = '';
+            document.getElementById('resetButton').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+            document.querySelectorAll('.container > *:not(#loader)').forEach(el => el.style.display = 'none');
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+                const weightedAverage = (0.7 * judgesScore) + (0.3 * audiencesScore);
+                document.getElementById('result').innerText = 'FinalScore= ' + weightedAverage.toFixed(2);
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('resetButton').style.display = 'block';
+            }, 1000);
+        }
+
+        function resetForm() {
+            document.getElementById('judgesScore').value = '';
+            document.getElementById('audiencesScore').value = '';
+            document.getElementById('result').innerText = '';
+            document.getElementById('resetButton').style.display = 'none';
+            document.querySelectorAll('.container > *:not(#loader):not(#result):not(#resetButton)').forEach(el => el.style.display = 'block');
+}
+    </script>
+</body>
+</html>
